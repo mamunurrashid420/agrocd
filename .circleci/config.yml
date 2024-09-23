@@ -17,4 +17,4 @@ workflows:
           tag: "${CIRCLE_SHA1}_$(data +%FT%H)"
           filters:
             branches:
-              only: master
+              only: main
