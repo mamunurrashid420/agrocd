@@ -1,0 +1,20 @@
+version: 2.1
+orbs:
+  aws-ecr: circleci/aws-ecr@8.1.2
+  aws-cli: circleci/aws-cli@3.1.1
+  aws-ecs: circleci/aws-ecs@3.2.0
+workflows:
+  build-and-push:
+    jobs:
+      - aws-ecr/build-and-push-image:
+          name: app-image-build
+          repo: cka-b08-app
+          aws-access-key-id: AWS_ACCESS_KEY_ID
+          aws-secret-access-key: AWS_SECRET_ACCESS_KEY
+          registry-id: AWS_ECR_REGISTRY_ID
+          dockerfile: Dockerfile
+          path: webapp-code/.
+          tag: "${CIRCLE_SHA1}_$(data +%FT%H)"
+          filters:
+            branches:
+              only: master
